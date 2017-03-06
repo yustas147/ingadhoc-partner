@@ -13,6 +13,8 @@
                         <button name="goto_facebook" string="Go" type="object"/>
                         <field name="twitter"/>
                         <button name="goto_twitter" string="Go" type="object"/>
+                        <field name="linkedin"/>
+                        <button name="goto_linkedin" string="Go" type="object"/>
                     </group>    
                 </field>    
                 <field name="email" position="after">

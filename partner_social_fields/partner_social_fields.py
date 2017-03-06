@@ -21,6 +21,7 @@ class res_partner(osv.osv):
         'facebook':fields.char('Facebook', size=64, required=False, readonly=False),
         'twitter':fields.char('Twitter', size=64, required=False, readonly=False),
         'skype':fields.char('Skype', size=64, required=False, readonly=False),
+        'linkedin':fields.char('Linkedin', size=64, required=False, readonly=False),
     }
     
     def goto_facebook(self, cr, uid, ids, context=None):
@@ -57,6 +58,28 @@ class res_partner(osv.osv):
                 url = 'https://www.twitter.com/' + partner.twitter
             
             return {'type': 'ir.actions.act_url', 'url': url, 'target': 'new'}
+
+    @api.multi
+    def goto_linkedin(self):
+        self.ensure_one()
+        partner = self
+        if partner.linkedin:
+            good_starting_urls = [
+                'https://linkedin.com/in', 'https://www.linkedin.com/in',
+                'http://linkedin.com/in', 'http://www.linkedin.com/in']
+            non_protocol_starting_urls = ['linkedin.com/', 'www.linkedin.com/']
+
+            if any(map(lambda x: partner.linkedin.startswith(
+                    x), good_starting_urls)):
+                url = partner.linkedin
+            elif any(map(lambda x: partner.linkedin.startswith(
+                    x), non_protocol_starting_urls)):
+                url = 'https://' + partner.linkedin
+            else:
+                url = 'https://www.linkedin.com/in/' + partner.linkedin
+
+            return {'type': 'ir.actions.act_url', 'url': url, 'target': 'new'}
+
     
 
 
