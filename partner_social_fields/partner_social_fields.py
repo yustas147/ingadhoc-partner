@@ -59,7 +59,6 @@ class res_partner(osv.osv):
             
             return {'type': 'ir.actions.act_url', 'url': url, 'target': 'new'}
 
-    @api.multi
     def goto_linkedin(self):
         self.ensure_one()
         partner = self
