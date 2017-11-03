@@ -22,6 +22,7 @@ class res_partner(osv.osv):
         'twitter':fields.char('Twitter', size=64, required=False, readonly=False),
         'skype':fields.char('Skype', size=64, required=False, readonly=False),
         'linkedin':fields.char('Linkedin', size=64, required=False, readonly=False),
+        'i502':fields.char('i502', size=64, required=False, readonly=False),
     }
     
     def goto_facebook(self, cr, uid, ids, context=None):
@@ -59,9 +60,9 @@ class res_partner(osv.osv):
             
             return {'type': 'ir.actions.act_url', 'url': url, 'target': 'new'}
 
-    def goto_linkedin(self):
-        self.ensure_one()
-        partner = self
+    def goto_linkedin(self, cr, uid, ids, context=None):
+        partner_obj = self.pool.get('res.partner')
+        partner = partner_obj.browse(cr, uid, ids, context=context)[0]        
         if partner.linkedin:
             good_starting_urls = [
                 'https://linkedin.com/in', 'https://www.linkedin.com/in',
@@ -78,6 +79,27 @@ class res_partner(osv.osv):
                 url = 'https://www.linkedin.com/in/' + partner.linkedin
 
             return {'type': 'ir.actions.act_url', 'url': url, 'target': 'new'}
+    
+    def goto_i502(self, cr, uid, ids, context=None):
+        partner_obj = self.pool.get('res.partner')
+        partner = partner_obj.browse(cr, uid, ids, context=context)[0]        
+        if partner.i502:
+            good_starting_urls = [
+                'https://502data.com/license', 'https://www.502data.com/license',
+                'http://502data.com/license', 'http://www.502data.com/license']
+            non_protocol_starting_urls = ['502data.com/', 'www.502data.com/']
+
+            if any(map(lambda x: partner.i502.startswith(
+                    x), good_starting_urls)):
+                url = partner.i502
+            elif any(map(lambda x: partner.i502.startswith(
+                    x), non_protocol_starting_urls)):
+                url = 'https://' + partner.i502
+            else:
+                url = 'https://www.i502.com/license/' + partner.i502
+
+            return {'type': 'ir.actions.act_url', 'url': url, 'target': 'new'}
+    
 
     
 
