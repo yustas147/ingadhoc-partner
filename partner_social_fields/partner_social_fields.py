@@ -20,6 +20,7 @@ class res_partner(osv.osv):
     _columns = {
         'facebook':fields.char('Facebook', size=64, required=False, readonly=False),
         'twitter':fields.char('Twitter', size=64, required=False, readonly=False),
+        'instagram':fields.char('Instagram', size=64, required=False, readonly=False),
         'skype':fields.char('Skype', size=64, required=False, readonly=False),
         'linkedin':fields.char('Linkedin', size=64, required=False, readonly=False),
         'i502':fields.char('i502', size=64, required=False, readonly=False),
@@ -100,7 +101,26 @@ class res_partner(osv.osv):
 
             return {'type': 'ir.actions.act_url', 'url': url, 'target': 'new'}
     
-
+    def goto_instagram(self, cr, uid, ids, context=None):
+            partner_obj = self.pool.get('res.partner')
+            partner = partner_obj.browse(cr, uid, ids, context=context)[0]        
+            if partner.instagram:
+                good_starting_urls = [
+                    'https://instagram.com', 'https://www.instagram.com',
+                    'http://instagram.com', 'http://www.instagram.com']
+                non_protocol_starting_urls = ['instagram.com/', 'www.instagram.com/']
+    
+                if any(map(lambda x: partner.instagram.startswith(
+                        x), good_starting_urls)):
+                    url = partner.instagram
+                elif any(map(lambda x: partner.instagram.startswith(
+                        x), non_protocol_starting_urls)):
+                    url = 'https://' + partner.instagram
+                else:
+                    url = 'https://www.istagram.com/' + partner.instagram
+    
+                return {'type': 'ir.actions.act_url', 'url': url, 'target': 'new'}
+        
     
 
 

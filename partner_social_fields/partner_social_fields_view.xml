@@ -10,13 +10,15 @@
                 <field name="website" position="after">
                     <group col="3" colspan="2">     
                         <field name="facebook"/>
-                        <button name="goto_facebook" string="Go" type="object"/>
+                        <button name="goto_facebook" string="Go" type="object" attrs="{'invisible':[('facebook', '=', False)]}"/>
                         <field name="twitter"/>
-                        <button name="goto_twitter" string="Go" type="object"/>
+                        <button name="goto_twitter" string="Go" type="object" attrs="{'invisible':[('twitter', '=', False)]}"/>
                         <field name="linkedin"/>
-                        <button name="goto_linkedin" string="Go" type="object"/>
+                        <button name="goto_linkedin" string="Go" type="object" attrs="{'invisible':[('linkedin', '=', False)]}"/>
                         <field name="i502"/>
-                        <button name="goto_i502" string="Go" type="object"/>
+                        <button name="goto_i502" string="Go" type="object" attrs="{'invisible':[('i502', '=', False)]}"/>
+                        <field name="instagram"/>
+                        <button name="goto_instagram" string="Go" type="object" attrs="{'invisible':[('instagram', '=', False)]}"/>
                     </group>    
                 </field>    
                 <field name="email" position="after">
